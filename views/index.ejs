@@ -60,6 +60,19 @@
         <%= post.title %>
       </h3>
     </a>
+
+    <form
+      action="/post/<%= post.id %>?_method=DELETE"
+      method="post"
+      onsubmit="return confirm('Apakah Anda yakin ingin menghapus postingan ini?')"
+    >
+      <button
+        type="submit"
+        class="delete-btn mt-4 rounded bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700"
+      >
+        Hapus
+      </button>
+    </form>
   </article>
   <% }) } %>
 </main>
