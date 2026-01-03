@@ -26,13 +26,48 @@
     <main
       class="mx-auto flex flex-col max-w-4xl items-center gap-4 px-4 sm:px-6 lg:px-8"
     >
-      <% posts.forEach(post => { %>
+      <% if (posts.length === 0) { %>
+      <div
+        role="alert"
+        class="rounded-md border border-blue-500 bg-blue-50 p-4 shadow-sm w-full"
+      >
+        <div class="flex items-start gap-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="-mt-0.5 size-6 text-blue-700"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+            ></path>
+          </svg>
+
+          <div class="flex-1">
+            <strong class="block leading-tight font-medium text-blue-800">
+              Info
+            </strong>
+
+            <p class="mt-0.5 text-sm text-blue-700">
+              Belum ada postingan apapun!
+            </p>
+          </div>
+        </div>
+      </div>
+      <% } else { posts.forEach(post => { %>
       <article
         class="rounded-[10px] border border-gray-200 bg-white p-4 w-full"
       >
-        <time datetime="2022-10-10" class="block text-xs text-gray-500">
-          <%= post.createdAt.toLocaleDateString('id-ID', { year: 'numeric',
-          month: 'long', day: 'numeric' }) %>
+        <time
+          datetime="<%= post.createdAt.toISOString() %>"
+          class="block text-xs text-gray-500"
+        >
+          <%= post.createdAt.toLocaleString('id-ID', { year: 'numeric', month:
+          'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }) %>
         </time>
 
         <a href="#">
@@ -41,7 +76,7 @@
           </h3>
         </a>
       </article>
-      <% }) %>
+      <% }) } %>
     </main>
 
     <dialog
