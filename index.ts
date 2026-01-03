@@ -1,5 +1,6 @@
 import express from 'express'
 import type { Request, Response } from 'express'
+import methodOverride from 'method-override'
 import path from 'node:path'
 
 const app = express()
@@ -8,6 +9,7 @@ const port = 3000
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 interface Post {
   id: string
@@ -23,7 +25,7 @@ const createPost = (title: string, content: string): Post => ({
   createdAt: new Date(),
 })
 
-const posts: Post[] = [
+let posts: Post[] = [
   {
     id: crypto.randomUUID(),
     title: 'Apa Itu Emotional Quotient?',
@@ -66,6 +68,13 @@ app.get('/post/:postId', (req: Request, res: Response) => {
   const post = posts.find((post) => post.id === postId)
 
   res.render('post', { post })
+})
+
+app.delete('/post/:postId', (req: Request, res: Response) => {
+  const postId = req.params.postId
+  posts = posts.filter((post) => post.id != postId)
+
+  res.redirect(303, '/')
 })
 
 app.listen(port, () => {
