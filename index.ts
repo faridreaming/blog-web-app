@@ -77,6 +77,22 @@ app.delete('/post/:postId', (req: Request, res: Response) => {
   res.redirect(303, '/')
 })
 
+app.patch('/update/:postId', (req: Request, res: Response) => {
+  const postId = req.params.postId
+
+  const data = req.body
+  const title = data.title
+  const content = data.content
+
+  const postIndex = posts.findIndex((post) => post.id === postId)
+  if (postIndex !== -1) {
+    posts[postIndex]!.title = title
+    posts[postIndex]!.content = content
+  }
+
+  res.redirect('/')
+})
+
 app.listen(port, () => {
   console.log(`Aplikasi berjalan di: http://localhost:${port}`)
 })
